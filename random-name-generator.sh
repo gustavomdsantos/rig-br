@@ -3427,7 +3427,7 @@ Zampol"
 
 NOME=`echo "$PT_NAMES" | shuf -n 1`
 SOBRENOMES=$(echo `echo "$PT_SURNAMES" | shuf -n 1` `echo "$PT_SURNAMES" | shuf -n 1`)
-EMAIL=$(echo $NOME | tr "[:upper:]" "[:lower:]" | sed -e 'y/āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜĀÁǍÀĒÉĚÈĪÍǏÌŌÓǑÒŪÚǓÙǕǗǙǛ/aaaaeeeeiiiioooouuuuüüüüAAAAEEEEIIIIOOOOUUUUÜÜÜÜ/')
+EMAIL=$(echo ${NOME// /_} | tr "[:upper:]" "[:lower:]" | sed -e 'y/āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜĀÁǍÀĒÉĚÈĪÍǏÌŌÓǑÒŪÚǓÙǕǗǙǛ/aaaaeeeeiiiioooouuuuüüüüAAAAEEEEIIIIOOOOUUUUÜÜÜÜ/')
 
 echo -e "Nome:\n""$NOME $SOBRENOMES"
 echo -e "\nE-mail:\n$EMAIL@$EMAIL_SERVER"
