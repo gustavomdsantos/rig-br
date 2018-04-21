@@ -3431,7 +3431,7 @@ endCor="\033[0m"
 
 NOME=`echo "$PT_NAMES" | shuf -n 1`
 SOBRENOMES=$(echo `echo "$PT_SURNAMES" | shuf -n 1` `echo "$PT_SURNAMES" | shuf -n 1`)
-EMAIL=$(echo ${NOME// /_} | tr "[:upper:]" "[:lower:]" | sed -e 'y/āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜĀÁǍÀĒÉĚÈĪÍǏÌŌÓǑÒŪÚǓÙǕǗǙǛ/aaaaeeeeiiiioooouuuuüüüüAAAAEEEEIIIIOOOOUUUUÜÜÜÜ/')
+EMAIL=$(echo ${NOME// /} | tr "[:upper:]" "[:lower:]" | sed -e 'y/āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜĀÁǍÀĒÉĚÈĪÍǏÌŌÓǑÒŪÚǓÙǕǗǙǛ/aaaaeeeeiiiioooouuuuüüüüAAAAEEEEIIIIOOOOUUUUÜÜÜÜ/')
 
 echo -e "${branco}Nome:${endCor}\n""$NOME $SOBRENOMES"
 echo -e "\n${branco}E-mail:${endCor}\n$EMAIL@$EMAIL_SERVER"
