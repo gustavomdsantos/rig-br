@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/usr/bin/env bash
 # Gerador de nomes aleatórios
 # Autor: Gustavo Moraes <gustavosotnas1@gmail.com>
 # MIT License – Copyright (c) 2018 Gustavo Moraes
