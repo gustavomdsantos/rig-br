@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Gerador de nomes aleatórios
+# RIG BR – the Random Identity Generator – para brasileiros.
 # Autor: Gustavo Moraes <gustavosotnas1@gmail.com>
 # MIT License – Copyright (c) 2018 Gustavo Moraes
 
