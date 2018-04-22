@@ -1,7 +1,7 @@
 [**Português**](#português) | [**English**](#english)
 
-RIG BR
-==========
+![](https://cdn.rawgit.com/wiki/gustavosotnas/rig-br/icon/rig-br.svgo.svg) RIG BR
+=================================================================================
 
 [![GitHub license](https://img.shields.io/github/license/gustavosotnas/rig-br.svg)](https://github.com/gustavosotnas/rig-br/blob/master/COPYING)
 [![GitHub release](https://img.shields.io/github/release/gustavosotnas/rig-br.svg?label=stable)](https://github.com/gustavosotnas/rig-br/releases/latest)
