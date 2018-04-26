@@ -26,7 +26,7 @@ Com o **RIG BR** você pode gerar:
 
 Para baixar o script, clique no botão abaixo:
 
-[![Baixar](http://dabuttonfactory.com/button.png?t=BAIXAR&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://rawgit.com/gustavosotnas/rig-br/master/random-name-generator.sh)
+[![Baixar](http://dabuttonfactory.com/button.png?t=BAIXAR&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://rawgit.com/gustavosotnas/rig-br/master/rig-br.sh)
 
 Após isso, abra o Terminal na pasta onde você salvou o script e dê permissão de execução para ele com o comando:
 
@@ -75,7 +75,7 @@ With **RIG BR** you can generate:
 
 To download the script, click in the button below:
 
-[![Download](http://dabuttonfactory.com/button.png?t=DOWNLOAD&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://rawgit.com/gustavosotnas/rig-br/master/random-name-generator.sh)
+[![Download](http://dabuttonfactory.com/button.png?t=DOWNLOAD&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://rawgit.com/gustavosotnas/rig-br/master/rig-br.sh)
 
 After that, open Terminal in the folder that you downloaded the script and give permission of execution to it with the command:
 
