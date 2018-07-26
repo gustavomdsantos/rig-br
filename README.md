@@ -22,19 +22,13 @@ Com o **RIG BR** você pode gerar:
 
 ### Download e usagem
 
-**RIG BR** está disponível como um Shell Script executável em sistemas UNIX (*GNU/Linux, Mac OS X,* etc.) e Windows (via [_Git Bash for Windows_](https://git-scm.com/download/win) ou [_MinGW_](http://www.mingw.org)).
+**RIG BR** está disponível como um programa executável em sistemas Windows e GNU/Linux.
 
-Para baixar o script, clique no botão abaixo:
+Para baixar a última versão do programa, clique no botão da sua escolha:
 
-[![Baixar](http://dabuttonfactory.com/button.png?t=BAIXAR&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://rawgit.com/gustavosotnas/rig-br/master/rig-br.sh)
+[![Baixar para Windows](http://dabuttonfactory.com/button.png?t=BAIXAR%20PARA%20WINDOWS&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://github.com/gustavosotnas/rig-br/releases/download/v0.1.0/rig-br_v0.1.0.exe) [![Baixar para Linux](http://dabuttonfactory.com/button.png?t=BAIXAR%20PARA%20LINUX&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://github.com/gustavosotnas/rig-br/releases/download/v0.1.0/rig-br_0.1.0_amd64)
 
-Após isso, abra o Terminal na pasta onde você salvou o script e dê permissão de execução para ele com o comando:
-
-```shell
-chmod +x rig-br.sh
-```
-
-E execute o script com o comando `./rig-br.sh` ou dê um duplo-clique do mouse sobre o ícone do script no explorador de arquivos do seu computador.
+No Windows, dê um duplo-clique do mouse sobre o ícone do executável no explorador de arquivos. No Linux, execute o programa com o comando `./rig-br_0.1.0_amd64` no Terminal.
 
 ### Bug tracker
 
@@ -71,19 +65,13 @@ With **RIG BR** you can generate:
 
 ### Download and usage
 
-**RIG BR** is available as an executable Shell Script in UNIX systems (*GNU/Linux, Mac OS X,* etc.) and Windows (via [_Git Bash for Windows_](https://git-scm.com/download/win) or [_MinGW_](http://www.mingw.org)).
+**RIG BR** is available as an executable program in Windows and GNU/Linux systems.
 
-To download the script, click in the button below:
+To download the last version of the program, click in the button of your choice:
 
-[![Download](http://dabuttonfactory.com/button.png?t=DOWNLOAD&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://rawgit.com/gustavosotnas/rig-br/master/rig-br.sh)
+[![Download for Windows](http://dabuttonfactory.com/button.png?t=DOWNLOAD%20FOR%20WINDOWS&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://github.com/gustavosotnas/rig-br/releases/download/v0.1.0/rig-br_v0.1.0.exe) [![Download for Linux](http://dabuttonfactory.com/button.png?t=DOWNLOAD%20FOR%20LINUX&f=Roboto-Bold&ts=14&tc=fff&hp=16&vp=8&c=2&bgt=unicolored&bgc=009688&shs=2&shc=eee&sho=s)](https://github.com/gustavosotnas/rig-br/releases/download/v0.1.0/rig-br_0.1.0_amd64)
 
-After that, open Terminal in the folder that you downloaded the script and give permission of execution to it with the command:
-
-```shell
-chmod +x rig-br.sh
-```
-
-And execute the script with the command `./rig-br.sh` or give a double-clicking on the script icon in the file explorer of your computer.
+In Windows, give a double-clicking on the executable icon in the file explorer. In Linux, execute the program with the command `./rig-br_0.1.0_amd64` in Terminal.
 
 ### Bug tracker
 
