@@ -7,6 +7,7 @@
 
 from random import randint
 from unicodedata import normalize
+from easygui import multenterbox
 
 emailServer = "sharklasers.com" # coloque aqui o sufixo de e-mail que quiser: gmail.com, outlook.com, etc.
 
@@ -3518,6 +3519,12 @@ ptSurnames = [
 	'Zampol'
 ]
 
+class NameAndEmail:
+	def __init__(self, completeName, email):
+		super(NameAndEmail, self).__init__()
+		self.completeName = completeName
+		self.email = email
+
 def generateRandomNameAndEmail():
 	name = ptNames[randint(0,len(ptNames))]
 	surname1 = ptSurnames[randint(0,len(ptSurnames))]
@@ -3527,16 +3534,25 @@ def generateRandomNameAndEmail():
 	nameWithoutDiacriticsSpacesAndLowercase = normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII').lower().replace(" ", "")
 	email = nameWithoutDiacriticsSpacesAndLowercase + "@" + emailServer
 
-	return {
-		'completeName': completeName,
-		'email': email
-	}
+	return NameAndEmail(completeName, email)
+
+def outputCLI(nameAndEmail):
+	print("Nome:")
+	print(nameAndEmail.completeName)
+
+	print("\nE-mail:")
+	print(nameAndEmail.email)
+	input()
+
+def outputGUI(nameAndEmail):
+	title = "RIG BR"
+	msg = "Selecione, copie e cole onde quiser os dados gerados abaixo:"
+	fieldNames = ['Nome', 'E-mail']
+	fieldValues = [nameAndEmail.completeName, nameAndEmail.email]
+	multenterbox(msg, title, fieldNames, fieldValues)
+
+#------------------ main ------------------
 
 nameAndEmail = generateRandomNameAndEmail()
-
-print("Nome:")
-print(nameAndEmail['completeName'])
-
-print("\nE-mail:")
-print(nameAndEmail['email'])
-input()
+#outputCLI(nameAndEmail)
+outputGUI(nameAndEmail)
