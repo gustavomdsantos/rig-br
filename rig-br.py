@@ -3518,17 +3518,25 @@ ptSurnames = [
 	'Zampol'
 ]
 
-nome = ptNames[randint(0,len(ptNames))]
-sobrenome1 = ptSurnames[randint(0,len(ptSurnames))]
-sobrenome2 = ptSurnames[randint(0,len(ptSurnames))]
-nomeCompleto = nome + " " + sobrenome1 + " " + sobrenome2
+def generateRandomNameAndEmail():
+	name = ptNames[randint(0,len(ptNames))]
+	surname1 = ptSurnames[randint(0,len(ptSurnames))]
+	surname2 = ptSurnames[randint(0,len(ptSurnames))]
+	completeName = name + " " + surname1 + " " + surname2
 
-nomeWithoutDiacriticsSpacesAndLowercase = normalize('NFKD', nome).encode('ASCII', 'ignore').decode('ASCII').lower().replace(" ", "")
-email = nomeWithoutDiacriticsSpacesAndLowercase + "@" + emailServer
+	nameWithoutDiacriticsSpacesAndLowercase = normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII').lower().replace(" ", "")
+	email = nameWithoutDiacriticsSpacesAndLowercase + "@" + emailServer
+
+	return {
+		'completeName': completeName,
+		'email': email
+	}
+
+nameAndEmail = generateRandomNameAndEmail()
 
 print("Nome:")
-print(nomeCompleto)
+print(nameAndEmail['completeName'])
 
 print("\nE-mail:")
-print(email)
+print(nameAndEmail['email'])
 input()
