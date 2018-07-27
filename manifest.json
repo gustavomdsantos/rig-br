@@ -1,0 +1,21 @@
+{
+  "packageName": "rig-br",
+  "name": "RIG BR",
+  "version": "0.3.0",
+  "author": "Gustavo Moraes",
+  "authorEmail": "gustavosotnas1@gmail.com",
+  "description": "RIG BR – the Random Identity Generator – para brasileiros.",
+  "longDescription": "RIG BR – the Random Identity Generator – for brazilians.",
+  "url": "https://github.com/gustavosotnas/rig-br",
+  "dependencies": {
+    "easygui": "^0.97"
+  },
+  "platformSpecific": {
+    "windows": {
+      "architecture": "win32"
+    },
+    "linux": {
+      "architecture": "amd64"
+    }
+  }
+}
