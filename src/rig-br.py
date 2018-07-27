@@ -9,7 +9,8 @@ from random import randint
 from unicodedata import normalize
 from easygui import multenterbox
 
-emailServer = "sharklasers.com" # coloque aqui o sufixo de e-mail que quiser: gmail.com, outlook.com, etc.
+# coloque aqui o sufixo de e-mail que quiser: gmail.com, outlook.com, etc.
+emailServer = "sharklasers.com"
 
 ptNames = [
 	'Abdénago',
@@ -3531,8 +3532,9 @@ def generateRandomNameAndEmail():
 	surname2 = ptSurnames[randint(0,len(ptSurnames))]
 	completeName = name + " " + surname1 + " " + surname2
 
-	nameWithoutDiacriticsSpacesAndLowercase = normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII').lower().replace(" ", "")
-	email = nameWithoutDiacriticsSpacesAndLowercase + "@" + emailServer
+	# username: the name without diacritics, spaces and lowercase.
+	username = normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII').lower().replace(" ", "")
+	email = username + "@" + emailServer
 
 	return NameAndEmail(completeName, email)
 
