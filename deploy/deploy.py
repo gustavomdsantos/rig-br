@@ -7,6 +7,12 @@
 
 import json, sys, shutil, subprocess
 
+defaultPaths = {
+	'dist': '../dist',
+	'src': '../src/rig-br.py',
+	'icon': '../../RIG BR.wiki/icon/rig-br.ico'
+}
+
 def readManifestFile():
 	with open('../manifest.json') as json_data_file:
 		data = json.load(json_data_file)
@@ -28,15 +34,15 @@ def getPlatform():
 
 def detectOS():
 	osName = getPlatform()
-	if osName == "Windows":
+	if osName is "Windows":
 		print("I'm running on a Windows PC!")
-	elif osName == "Linux":
+	elif osName is "Linux":
 		print("I'm running on a Linux PC!")
 	else:
 		print("I don't know where I'm being running.")
 
 def rmDistFolder():
-	distPath = '../dist'
+	distPath = defaultPaths['dist']
 	try:
 		print("Deleting '"+ distPath +"' folder...")
 		shutil.rmtree(distPath)
@@ -45,11 +51,20 @@ def rmDistFolder():
 		print("'"+ distPath +"' folder has been previously deleted.")
 
 def isPyinstallerInstalled():
-	command = subprocess.run('pyinstaller --version', shell=True,
-		stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-	return True if command.returncode is 0 else False
+	commandOutput = subprocess.run('pyinstaller --version',
+		shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+	return True if commandOutput.returncode is 0 else False
+
+def compile():
+	src = defaultPaths['src']
+	icon = defaultPaths['icon']
+	commandInput = 'pyinstaller \''+ src +'\' -w -i \''+ icon +'\''
+	print(commandInput)
+	commandOutput = subprocess.run(commandInput, shell=True)
+	print(commandOutput.returncode)
 
 readManifestFile()
 detectOS()
 rmDistFolder()
-print(isPyinstallerInstalled())
+if isPyinstallerInstalled():
+	compile()
