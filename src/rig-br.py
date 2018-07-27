@@ -3532,9 +3532,9 @@ def generateRandomNameAndEmail():
 	surname2 = ptSurnames[randint(0,len(ptSurnames))]
 	completeName = name + " " + surname1 + " " + surname2
 
-	nameWithoutDiacriticsSpacesAndLowercase = normalize('NFKD', name)
-		.encode('ASCII', 'ignore').decode('ASCII').lower().replace(" ", "")
-	email = nameWithoutDiacriticsSpacesAndLowercase + "@" + emailServer
+	# username: the name without diacritics, spaces and lowercase.
+	username = normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII').lower().replace(" ", "")
+	email = username + "@" + emailServer
 
 	return NameAndEmail(completeName, email)
 
