@@ -10,7 +10,7 @@ import json, sys, shutil, subprocess
 defaultPaths = {
 	'dist': '../dist',
 	'src': '../src/rig-br.py',
-	'icon': '../../RIG BR.wiki/icon/rig-br.ico'
+	'icon': '../../rig-br.wiki/icon/rig-br.ico'
 }
 
 def readManifestFile():
