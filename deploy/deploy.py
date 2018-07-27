@@ -5,11 +5,34 @@
 # Autor: Gustavo Moraes <gustavosotnas1@gmail.com>
 # MIT License – Copyright (c) 2018 Gustavo Moraes
 
-import json
+import json, sys
 
 def readManifestFile():
 	with open('../manifest.json') as json_data_file:
 		data = json.load(json_data_file)
 	print(data)
 
+# Source: https://www.webucator.com/how-to/how-check-the-operating-system-with-python.cfm
+def getPlatform():
+	platforms = {
+		'linux1' : 'Linux',
+		'linux2' : 'Linux',
+		'darwin' : 'OS X',
+		'win32' : 'Windows'
+	}
+	if sys.platform not in platforms:
+		return sys.platform
+	
+	return platforms[sys.platform]
+
+def detectOS():
+	osName = getPlatform()
+	if osName == "Windows":
+		print("I'm running on a Windows PC!")
+	elif osName == "Linux":
+		print("I'm running on a Linux PC!")
+	else:
+		print("I don't know where I'm being running.")
+
 readManifestFile()
+detectOS()
