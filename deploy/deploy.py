@@ -5,7 +5,7 @@
 # Autor: Gustavo Moraes <gustavosotnas1@gmail.com>
 # MIT License – Copyright (c) 2018 Gustavo Moraes
 
-import json, sys
+import json, sys, shutil
 
 def readManifestFile():
 	with open('../manifest.json') as json_data_file:
@@ -34,5 +34,15 @@ def detectOS():
 	else:
 		print("I don't know where I'm being running.")
 
+def rmDistFolder():
+	distPath = '../dist'
+	try:
+		print("Deleting '"+ distPath +"' folder...")
+		shutil.rmtree(distPath)
+		print("Deleted '"+ distPath +"' folder has been previously deleted.")
+	except FileNotFoundError as fnfe:
+		print("'"+ distPath +"' folder has been previously deleted.")
+
 readManifestFile()
 detectOS()
+rmDistFolder()
