@@ -89,15 +89,32 @@ def isPyinstallerInstalled():
 def compile():
 	commandInput = 'pyinstaller \''+ paths['src'] +'\' -w -i \''+ paths['icon'] +'\''
 	if getPlatform() is "Windows":
-		# Workaround about PyInstaller (doesn't run in Python shells on Windows)
-		commandInput = 'PowerShell -Command "& {'+ commandInput +'}"'
-	print(commandInput)
-	commandOutput = subprocess.run(commandInput, shell=True)
+		powershell = PowerShellWrapper()
+		powershell.run(commandInput)
+	else:
+		commandOutput = subprocess.run(commandInput, shell=True)
+
+# Create a corresponding package for the running OS.
+def build():
+	osName = getPlatform()
+	if osName is "Windows":
+		createWin32Package()
+	elif osName is "Linux":
+		createDebPackage()
+
+def createWin32Package():
+	if isInnoSetupInstalled():
+		runInnoSetup()
+	else:
+		print("Build NOT started.")
+
+def createDebPackage():
+	print("Not implemented yet.")
 
 def isInnoSetupInstalled():
 	return True if os.path.isfile(paths['iscc']) else False
 
-def build():
+def runInnoSetup():
 	powershell = PowerShellWrapper()
 	powershell.run("& \'" + paths['iscc'] +"\' "+ paths['iss'])
 
@@ -109,8 +126,4 @@ else:
 	cleanBuild()
 	if isPyinstallerInstalled():
 		compile()
-	if getPlatform() is "Windows":
-		if isInnoSetupInstalled():
-			build()
-		else:
-			print("Build NOT started.")
+		build()
