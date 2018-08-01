@@ -105,11 +105,14 @@ def compile():
 # 		#shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 # 	return True if commandOutput.returncode is 0 else False
 
-readManifestFile()
-detectOS()
-cleanBuild()
-if isPyinstallerInstalled():
-	compile()
+if len(sys.argv) > 1 and sys.argv[1] == '--clean':
+	cleanBuild()
+else:
+	readManifestFile()
+	detectOS()
+	cleanBuild()
+	if isPyinstallerInstalled():
+		compile()
 # if getPlatform() is "Windows":
 # 	if isInnoSetupInstalled():
 # 		build()
