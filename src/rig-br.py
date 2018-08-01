@@ -3527,9 +3527,9 @@ class NameAndEmail:
 		self.email = email
 
 def generateRandomNameAndEmail():
-	name = ptNames[randint(0,len(ptNames))]
-	surname1 = ptSurnames[randint(0,len(ptSurnames))]
-	surname2 = ptSurnames[randint(0,len(ptSurnames))]
+	name = ptNames[randint(0,len(ptNames)-1)]
+	surname1 = ptSurnames[randint(0, len(ptSurnames)-1)]
+	surname2 = ptSurnames[randint(0, len(ptSurnames)-1)]
 	completeName = name + " " + surname1 + " " + surname2
 
 	# username: the name without diacritics, spaces and lowercase.
