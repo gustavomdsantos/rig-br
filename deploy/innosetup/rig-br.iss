@@ -25,7 +25,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DisableProgramGroupPage=yes
 OutputBaseFilename=rig-br_v{#MyAppVersion}_setup
-SetupIconFile=..\..\..\RIG BR.wiki\icon\rig-br.ico
+SetupIconFile=..\..\..\rig-br.wiki\icon\rig-br.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -38,8 +38,8 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "..\..\dist\rig-br\rig-br.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\..\dist\rig-br\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\dist\rig-br\rig-br.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\rig-br\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
