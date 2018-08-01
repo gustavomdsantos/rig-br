@@ -11,6 +11,7 @@ defaultPaths = {
 	'build': 'build',
 	'dist': 'dist',
 	'spec': 'rig-br.spec',
+	'pycache': '../src/__pycache__',
 	'src': '../src/rig-br.py',
 	'icon': '../../rig-br.wiki/icon/rig-br.ico',
 	'iscc': 'C:\Program Files (x86)\Inno Setup 5\ISCC.exe',
@@ -38,7 +39,6 @@ def getPlatform():
 
 def detectOS():
 	osName = getPlatform()
-	return osName
 	if osName is "Windows":
 		print("OS: Windows")
 	elif osName is "Linux":
@@ -65,6 +65,7 @@ def cleanBuild():
 	rm_R(defaultPaths['build'])
 	rm_R(defaultPaths['dist'])
 	rm_R(defaultPaths['spec'])
+	rm_R(defaultPaths['pycache'])
 
 def isPyinstallerInstalled():
 	commandOutput = subprocess.run('pyinstaller --version',
