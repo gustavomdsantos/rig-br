@@ -15,9 +15,22 @@ paths = {
 	'pycache': '../src/__pycache__',
 	'src': '../src/rig-br.py',
 	'icon': '../../rig-br.wiki/icon/rig-br.ico',
-	'iscc': 'C:\Program Files (x86)\Inno Setup 5\ISCC.exe',
-	'iss': 'innosetup/rig-br.iss'
+	'iscc': 'C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe',
+	'iss': '.\\innosetup\\rig-br.iss'
 }
+
+# Windows PowerShell Wrapper
+class PowerShellWrapper:
+	def __encodeCommand__(self, commandString):
+		input = 'PowerShell -Command "& {$command = {'+ commandString +'}; $bytes = [System.Text.Encoding]::Unicode.GetBytes($command); $encodedCommand = [Convert]::ToBase64String($bytes); echo $encodedCommand}"'
+		output = subprocess.run(input, shell=True, stdout=subprocess.PIPE)
+		return output.stdout.decode("utf-8").strip()
+
+	def run(self, command):
+		encodedCommand = self.__encodeCommand__(command)
+		input = 'PowerShell -encodedCommand "'+ encodedCommand + '"'
+		output = subprocess.run(input, shell=True)
+		return output
 
 def readManifestFile():
 	with open(paths['manifest']) as manifestJSON:
@@ -74,36 +87,19 @@ def isPyinstallerInstalled():
 	return True if commandOutput.returncode is 0 else False
 
 def compile():
-	src = paths['src']
-	icon = paths['icon']
-	commandInput = 'pyinstaller \''+ src +'\' -w -i \''+ icon +'\''
+	commandInput = 'pyinstaller \''+ paths['src'] +'\' -w -i \''+ paths['icon'] +'\''
 	if getPlatform() is "Windows":
 		# Workaround about PyInstaller (doesn't run in Python shells on Windows)
 		commandInput = 'PowerShell -Command "& {'+ commandInput +'}"'
 	print(commandInput)
 	commandOutput = subprocess.run(commandInput, shell=True)
-	print(commandOutput.returncode)
 
-# def isInnoSetupInstalled():
-# 	iscc = paths['iscc']
-# 	commandInput = 'PowerShell -Command "&(“'+ iscc +'”)"'
-# 	#commandInput = 'PowerShell -Command "&(“'+ iscc +'” /?)"'
-# 	print(commandInput)
-# 	commandOutput = subprocess.run(commandInput,
-# 		shell=True)
-# 		#shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-# 	return True if commandOutput.returncode is 0 else False
+def isInnoSetupInstalled():
+	return True if os.path.isfile(paths['iscc']) else False
 
-# def build():
-# 	iscc = paths['iscc']
-# 	iss = paths['iss']
-# 	print("Build started!")
-# 	commandInput = 'cmd.exe /C "'+ iscc +'" "'+ iss + '"'
-# 	print(commandInput)
-# 	commandOutput = subprocess.run(commandInput,
-# 		shell=True)
-# 		#shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-# 	return True if commandOutput.returncode is 0 else False
+def build():
+	powershell = PowerShellWrapper()
+	powershell.run("& \'" + paths['iscc'] +"\' "+ paths['iss'])
 
 if len(sys.argv) > 1 and sys.argv[1] == '--clean':
 	cleanBuild()
@@ -113,9 +109,8 @@ else:
 	cleanBuild()
 	if isPyinstallerInstalled():
 		compile()
-# if getPlatform() is "Windows":
-# 	if isInnoSetupInstalled():
-# 		build()
-# 	else:
-# 		print("Build NOT started.")
-# build()
+	if getPlatform() is "Windows":
+		if isInnoSetupInstalled():
+			build()
+		else:
+			print("Build NOT started.")
