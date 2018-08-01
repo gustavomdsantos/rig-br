@@ -7,7 +7,8 @@
 
 import sys, os, json, shutil, subprocess
 
-defaultPaths = {
+paths = {
+	'manifest': '../manifest.json',
 	'build': 'build',
 	'dist': 'dist',
 	'spec': 'rig-br.spec',
@@ -19,9 +20,9 @@ defaultPaths = {
 }
 
 def readManifestFile():
-	with open('../manifest.json') as json_data_file:
-		data = json.load(json_data_file)
-	print(data)
+	with open(paths['manifest']) as manifestJSON:
+		manifest = json.load(manifestJSON)
+	print(manifest)
 
 # Source:
 #https://www.webucator.com/how-to/how-check-the-operating-system-with-python.cfm
@@ -62,10 +63,10 @@ def rm_R(fileOrFolder):
 			print("'"+ fileOrFolder +"' folder has been previously deleted.")
 
 def cleanBuild():
-	rm_R(defaultPaths['build'])
-	rm_R(defaultPaths['dist'])
-	rm_R(defaultPaths['spec'])
-	rm_R(defaultPaths['pycache'])
+	rm_R(paths['build'])
+	rm_R(paths['dist'])
+	rm_R(paths['spec'])
+	rm_R(paths['pycache'])
 
 def isPyinstallerInstalled():
 	commandOutput = subprocess.run('pyinstaller --version',
@@ -73,8 +74,8 @@ def isPyinstallerInstalled():
 	return True if commandOutput.returncode is 0 else False
 
 def compile():
-	src = defaultPaths['src']
-	icon = defaultPaths['icon']
+	src = paths['src']
+	icon = paths['icon']
 	commandInput = 'pyinstaller \''+ src +'\' -w -i \''+ icon +'\''
 	if getPlatform() is "Windows":
 		# Workaround about PyInstaller (doesn't run in Python shells on Windows)
@@ -84,7 +85,7 @@ def compile():
 	print(commandOutput.returncode)
 
 # def isInnoSetupInstalled():
-# 	iscc = defaultPaths['iscc']
+# 	iscc = paths['iscc']
 # 	commandInput = 'PowerShell -Command "&(“'+ iscc +'”)"'
 # 	#commandInput = 'PowerShell -Command "&(“'+ iscc +'” /?)"'
 # 	print(commandInput)
@@ -94,8 +95,8 @@ def compile():
 # 	return True if commandOutput.returncode is 0 else False
 
 # def build():
-# 	iscc = defaultPaths['iscc']
-# 	iss = defaultPaths['iss']
+# 	iscc = paths['iscc']
+# 	iss = paths['iss']
 # 	print("Build started!")
 # 	commandInput = 'cmd.exe /C "'+ iscc +'" "'+ iss + '"'
 # 	print(commandInput)
