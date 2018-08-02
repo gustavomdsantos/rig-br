@@ -22,9 +22,8 @@ paths = {
 # Windows PowerShell Wrapper
 class PowerShellWrapper:
 	def __encodeCommand__(self, commandString):
-		input = 'PowerShell -Command "& {$command = {'+ commandString +'}; $bytes = [System.Text.Encoding]::Unicode.GetBytes($command); $encodedCommand = [Convert]::ToBase64String($bytes); echo $encodedCommand}"'
-		output = subprocess.run(input, shell=True, stdout=subprocess.PIPE)
-		return output.stdout.decode("utf-8").strip()
+		commandInBase64 = base64.b64encode(commandString.encode('utf-16le'))
+		return commandInBase64.decode("utf-8")
 
 	def run(self, command):
 		encodedCommand = self.__encodeCommand__(command)
