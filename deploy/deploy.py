@@ -97,7 +97,7 @@ def createWin32Package():
 		print("Build NOT started.")
 
 def createDebPackage():
-	print("Not implemented yet.")
+	raise NotImplementedError("Not implemented yet.")
 
 def isInnoSetupInstalled():
 	return True if os.path.isfile(paths['iscc']) else False
@@ -105,6 +105,8 @@ def isInnoSetupInstalled():
 def runInnoSetup():
 	powershell = PowerShellWrapper()
 	powershell.run("& \'" + paths['iscc'] +"\' "+ paths['iss'])
+
+# =================================== main ====================================
 
 if len(sys.argv) > 1 and sys.argv[1] == '--clean':
 	cleanBuild()
@@ -116,3 +118,48 @@ else:
 		compile()
 		build()
 		cleanBuild()
+
+# ================================= end main ==================================
+
+class Deploy:
+	"""Classe-base (interface) que determina os métodos que um Deploy deve ter,
+	independentemente do SO usado"""
+	def cleanBuild(self):
+		raise NotImplementedError("Not implemented yet.")
+
+	def isPyinstallerInstalled(self):
+		raise NotImplementedError("Not implemented yet.")
+
+	def compile(self):
+		raise NotImplementedError("Not implemented yet.")
+
+	def build(self):
+		raise NotImplementedError("Not implemented yet.")
+
+class Deploy4Windows(Deploy):
+	"""Classe que faz deploy para Windows."""
+	def cleanBuild(self):
+		print("cleanBuild no Windows.")
+
+	def isPyinstallerInstalled(self):
+		print("isPyinstallerInstalled no Windows.")
+
+	def compile(self):
+		print("compile no Windows.")
+
+	def build(self):
+		print("build no Windows.")
+
+class Deploy4Linux(Deploy):
+	"""Classe que faz deploy para Linux."""
+	def cleanBuild(self):
+		print("cleanBuild no Linux.")
+
+	def isPyinstallerInstalled(self):
+		print("isPyinstallerInstalled no Linux.")
+
+	def compile(self):
+		print("compile no Linux.")
+
+	def build(self):
+		print("build no Linux.")
