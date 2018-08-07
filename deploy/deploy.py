@@ -6,6 +6,7 @@
 # MIT License – Copyright (c) 2018 Gustavo Moraes
 
 import sys, os, json, shutil, subprocess
+from libs.pshwrapper.pshwrapper import PowerShellWrapper
 
 paths = {
 	'manifest': '../manifest.json',
@@ -18,18 +19,6 @@ paths = {
 	'iscc': 'C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe',
 	'iss': '.\\innosetup\\rig-br.iss'
 }
-
-# Windows PowerShell Wrapper
-class PowerShellWrapper:
-	def __encodeCommand__(self, commandString):
-		commandInBase64 = base64.b64encode(commandString.encode('utf-16le'))
-		return commandInBase64.decode("utf-8")
-
-	def run(self, command):
-		encodedCommand = self.__encodeCommand__(command)
-		input = 'PowerShell -encodedCommand "'+ encodedCommand + '"'
-		output = subprocess.run(input, shell=True)
-		return output
 
 def readManifestFile():
 	with open(paths['manifest']) as manifestJSON:
@@ -126,3 +115,4 @@ else:
 	if isPyinstallerInstalled():
 		compile()
 		build()
+		cleanBuild()
