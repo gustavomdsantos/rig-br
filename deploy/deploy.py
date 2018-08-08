@@ -163,3 +163,16 @@ class Deploy4Linux(Deploy):
 
 	def build(self):
 		print("build no Linux.")
+
+# obj1 = Deploy4Windows()
+# obj2 = Deploy4Linux()
+
+# obj1.cleanBuild()
+# obj1.isPyinstallerInstalled()
+# obj1.compile()
+# obj1.build()
+
+# obj2.cleanBuild()
+# obj2.isPyinstallerInstalled()
+# obj2.compile()
+# obj2.build()
