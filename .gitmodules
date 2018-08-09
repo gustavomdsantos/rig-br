@@ -1,3 +1,6 @@
 [submodule "deploy/libs/pshwrapper"]
 	path = deploy/deps/pshwrapper
 	url = https://github.com/gustavosotnas/pshwrapper.git
+[submodule "rig-br.wiki"]
+	path = deploy/deps/rig-br.wiki
+	url = https://github.com/gustavosotnas/rig-br.wiki.git
