@@ -6,6 +6,7 @@
 # MIT License – Copyright (c) 2018 Gustavo Moraes
 
 import sys, os, json, shutil, subprocess
+from enum import Enum, unique
 from deps.pshwrapper.pshwrapper import PowerShellWrapper
 
 paths = {
@@ -25,15 +26,7 @@ def readManifestFile():
 		manifest = json.load(manifestJSON)
 	print(manifest)
 
-# Source:
-#https://www.webucator.com/how-to/how-check-the-operating-system-with-python.cfm
 def getPlatform():
-	platforms = {
-		'linux1' : 'Linux',
-		'linux2' : 'Linux',
-		'darwin' : 'OS X',
-		'win32' : 'Windows'
-	}
 	if sys.platform not in platforms:
 		return sys.platform
 	
@@ -108,22 +101,44 @@ def runInnoSetup():
 
 # =================================== main ====================================
 
-if len(sys.argv) > 1 and sys.argv[1] == '--clean':
-	cleanBuild()
-else:
-	readManifestFile()
-	detectOS()
-	cleanBuild()
-	if isPyinstallerInstalled():
-		compile()
-		build()
-		cleanBuild()
+# if len(sys.argv) > 1 and sys.argv[1] == '--clean':
+# 	cleanBuild()
+# else:
+# 	readManifestFile()
+# 	detectOS()
+# 	cleanBuild()
+# 	if isPyinstallerInstalled():
+# 		compile()
+# 		build()
+# 		cleanBuild()
 
 # ================================= end main ==================================
 
-class Deploy:
+@unique
+class OS(Enum):
+	"""Enum de aliases para os principais sistemas operacionais."""
+
+	WINDOWS = 'win32'
+	LINUX = ['linux', 'linux1', 'linux2']
+	OSX = 'darwin'
+
+class DeployRunner():
+	"""Classe estática que executa o script de deploy"""
+
+	@staticmethod
+	def run(deploy):
+		deploy.printHeader()
+
+class GenericDeploy:
 	"""Classe-base (interface) que determina os métodos que um Deploy deve ter,
 	independentemente do SO usado"""
+
+	def printHeader(self):
+		raise NotImplementedError("ERROR: Unknown operating system ("+ sys.platform +")")
+
+	def cleanBuild(self):
+		raise NotImplementedError("Not implemented yet.")
+
 	def cleanBuild(self):
 		raise NotImplementedError("Not implemented yet.")
 
@@ -136,8 +151,12 @@ class Deploy:
 	def build(self):
 		raise NotImplementedError("Not implemented yet.")
 
-class Deploy4Windows(Deploy):
+class Deploy4Windows(GenericDeploy):
 	"""Classe que faz deploy para Windows."""
+
+	def printHeader(self):
+		print("RIG BR deploy script for Windows \n© 2018 Gustavo Moraes \n")
+
 	def cleanBuild(self):
 		print("cleanBuild no Windows.")
 
@@ -150,8 +169,12 @@ class Deploy4Windows(Deploy):
 	def build(self):
 		print("build no Windows.")
 
-class Deploy4Linux(Deploy):
+class Deploy4Linux(GenericDeploy):
 	"""Classe que faz deploy para Linux."""
+
+	def printHeader(self):
+		print("RIG BR deploy script for Linux \n© 2018 Gustavo Moraes \n")
+
 	def cleanBuild(self):
 		print("cleanBuild no Linux.")
 
@@ -164,15 +187,23 @@ class Deploy4Linux(Deploy):
 	def build(self):
 		print("build no Linux.")
 
-# obj1 = Deploy4Windows()
-# obj2 = Deploy4Linux()
+# =================================== main ====================================
 
-# obj1.cleanBuild()
-# obj1.isPyinstallerInstalled()
-# obj1.compile()
-# obj1.build()
+def main():
+	osName = sys.platform
 
-# obj2.cleanBuild()
-# obj2.isPyinstallerInstalled()
-# obj2.compile()
-# obj2.build()
+	if osName in OS.WINDOWS.value:
+		deploy = Deploy4Windows()
+	elif osName in OS.LINUX.value:
+		deploy = Deploy4Linux()
+	else:
+		deploy = GenericDeploy()
+
+	try:
+		DeployRunner.run(deploy)
+	except NotImplementedError as nie:
+		print(nie, file=sys.stderr)
+
+main()
+
+# ================================= end main ==================================
