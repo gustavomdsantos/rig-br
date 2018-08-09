@@ -6,7 +6,7 @@
 # MIT License – Copyright (c) 2018 Gustavo Moraes
 
 import sys, os, json, shutil, subprocess
-from libs.pshwrapper.pshwrapper import PowerShellWrapper
+from deps.pshwrapper.pshwrapper import PowerShellWrapper
 
 paths = {
 	'manifest': '../manifest.json',
@@ -15,7 +15,7 @@ paths = {
 	'spec': 'rig-br.spec',
 	'pycache': '../src/__pycache__',
 	'src': '../src/rig-br.py',
-	'icon': '../../rig-br.wiki/icon/rig-br.ico',
+	'icon': 'deps/rig-br.wiki/icon/rig-br.ico',
 	'iscc': 'C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe',
 	'iss': '.\\innosetup\\rig-br.iss'
 }
