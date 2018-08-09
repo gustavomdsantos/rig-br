@@ -1,3 +1,3 @@
 [submodule "deploy/libs/pshwrapper"]
-	path = deploy/libs/pshwrapper
+	path = deploy/deps/pshwrapper
 	url = https://github.com/gustavosotnas/pshwrapper.git
