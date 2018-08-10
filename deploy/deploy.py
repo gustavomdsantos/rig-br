@@ -26,21 +26,6 @@ def readManifestFile():
 		manifest = json.load(manifestJSON)
 	print(manifest)
 
-def getPlatform():
-	if sys.platform not in platforms:
-		return sys.platform
-	
-	return platforms[sys.platform]
-
-def detectOS():
-	osName = getPlatform()
-	if osName is "Windows":
-		print("OS: Windows")
-	elif osName is "Linux":
-		print("OS: Linux")
-	else:
-		print("OS: Unknown ("+ osName +")")
-
 def rm_R(fileOrFolder):
 	if os.path.isfile(fileOrFolder):
 		try:
@@ -56,64 +41,6 @@ def rm_R(fileOrFolder):
 		except FileNotFoundError as fnfe:
 			print("'"+ fileOrFolder +"' folder has been previously deleted.")
 
-def cleanBuild():
-	rm_R(paths['build'])
-	rm_R(paths['dist'])
-	rm_R(paths['spec'])
-	rm_R(paths['pycache'])
-
-def isPyinstallerInstalled():
-	commandOutput = subprocess.run('pyinstaller --version',
-		shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-	return True if commandOutput.returncode is 0 else False
-
-def compile():
-	commandInput = 'pyinstaller \''+ paths['src'] +'\' -w -i \''+ paths['icon'] +'\''
-	if getPlatform() is "Windows":
-		powershell = PowerShellWrapper()
-		powershell.run(commandInput)
-	else:
-		commandOutput = subprocess.run(commandInput, shell=True)
-
-# Create a corresponding package for the running OS.
-def build():
-	osName = getPlatform()
-	if osName is "Windows":
-		createWin32Package()
-	elif osName is "Linux":
-		createDebPackage()
-
-def createWin32Package():
-	if isInnoSetupInstalled():
-		runInnoSetup()
-	else:
-		print("Build NOT started.")
-
-def createDebPackage():
-	raise NotImplementedError("Not implemented yet.")
-
-def isInnoSetupInstalled():
-	return True if os.path.isfile(paths['iscc']) else False
-
-def runInnoSetup():
-	powershell = PowerShellWrapper()
-	powershell.run("& \'" + paths['iscc'] +"\' "+ paths['iss'])
-
-# =================================== main ====================================
-
-# if len(sys.argv) > 1 and sys.argv[1] == '--clean':
-# 	cleanBuild()
-# else:
-# 	readManifestFile()
-# 	detectOS()
-# 	cleanBuild()
-# 	if isPyinstallerInstalled():
-# 		compile()
-# 		build()
-# 		cleanBuild()
-
-# ================================= end main ==================================
-
 @unique
 class OS(Enum):
 	"""Enum de aliases para os principais sistemas operacionais."""
@@ -127,17 +54,25 @@ class DeployRunner():
 
 	@staticmethod
 	def run(deploy):
-		deploy.printHeader()
+		deploy.cleanBuild()
+		if deploy.isPyinstallerInstalled():
+			deploy.compile()
+			deploy.build()
+			deploy.cleanBuild()
+		# else:
+		# 	raise "error"
+
+	@staticmethod
+	def clean(deploy):
+		deploy.cleanBuild()
 
 class GenericDeploy:
 	"""Classe-base (interface) que determina os métodos que um Deploy deve ter,
 	independentemente do SO usado"""
 
-	def printHeader(self):
+	def __init__(self):
+		print("\nRIG BR deploy script \n© 2018 Gustavo Moraes")
 		raise NotImplementedError("ERROR: Unknown operating system ("+ sys.platform +")")
-
-	def cleanBuild(self):
-		raise NotImplementedError("Not implemented yet.")
 
 	def cleanBuild(self):
 		raise NotImplementedError("Not implemented yet.")
@@ -154,38 +89,74 @@ class GenericDeploy:
 class Deploy4Windows(GenericDeploy):
 	"""Classe que faz deploy para Windows."""
 
-	def printHeader(self):
-		print("RIG BR deploy script for Windows \n© 2018 Gustavo Moraes \n")
+	# Override
+	def __init__(self):
+		print("\nRIG BR deploy script for Windows \n© 2018 Gustavo Moraes")
 
+	# Override
 	def cleanBuild(self):
-		print("cleanBuild no Windows.")
+		print("\n * Cleaning build...\n")
+		rm_R(paths['build'])
+		rm_R(paths['dist'])
+		rm_R(paths['spec'])
+		rm_R(paths['pycache'])
 
+	# Override
 	def isPyinstallerInstalled(self):
-		print("isPyinstallerInstalled no Windows.")
+		print("\n * Detecting PyInstaller in this computer...\n")
+		commandOutput = subprocess.run('pyinstaller --version',
+			shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+		return True if commandOutput.returncode is 0 else False
 
+	# Override
 	def compile(self):
-		print("compile no Windows.")
+		print("\n * Compiling program...\n")
+		commandInput = 'pyinstaller \''+ paths['src'] +'\' -w -i \''+ paths['icon'] +'\''
+		powershell = PowerShellWrapper()
+		powershell.run(commandInput)
 
+	# Override
 	def build(self):
-		print("build no Windows.")
+		print("\n * Building installer...\n")
+		if self.__isInnoSetupInstalled():
+			self.__createWin32Package()
+		# else:
+		# 	print("Build NOT started.")
+
+	def __isInnoSetupInstalled(self):
+		return True if os.path.isfile(paths['iscc']) else False
+
+	def __createWin32Package(self):
+		powershell = PowerShellWrapper()
+		powershell.run("& \'" + paths['iscc'] +"\' "+ paths['iss'])
 
 class Deploy4Linux(GenericDeploy):
 	"""Classe que faz deploy para Linux."""
 
-	def printHeader(self):
-		print("RIG BR deploy script for Linux \n© 2018 Gustavo Moraes \n")
+	# Override
+	def __init__(self):
+		print("\nRIG BR deploy script for Linux \n© 2018 Gustavo Moraes")
 
+	# Override
 	def cleanBuild(self):
 		print("cleanBuild no Linux.")
 
+	# Override
 	def isPyinstallerInstalled(self):
 		print("isPyinstallerInstalled no Linux.")
 
+	# Override
 	def compile(self):
-		print("compile no Linux.")
+		print("\n * Compiling program...\n")
+		commandInput = 'pyinstaller \''+ paths['src'] +'\' -w -i \''+ paths['icon'] +'\''
+		commandOutput = subprocess.run(commandInput, shell=True)
 
+	# Override
 	def build(self):
 		print("build no Linux.")
+
+	def __createDebPackage(self):
+		raise NotImplementedError("Not implemented yet.")
 
 # =================================== main ====================================
 
@@ -200,7 +171,10 @@ def main():
 		deploy = GenericDeploy()
 
 	try:
-		DeployRunner.run(deploy)
+		if len(sys.argv) > 1 and sys.argv[1] == '--clean':
+			DeployRunner.clean(deploy)
+		else:
+			DeployRunner.run(deploy)
 	except NotImplementedError as nie:
 		print(nie, file=sys.stderr)
 
