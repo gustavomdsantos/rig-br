@@ -55,7 +55,7 @@ class DeployRunner():
 	@staticmethod
 	def run(deploy):
 		deploy.cleanBuild()
-		if deploy.isPyinstallerInstalled():
+		if deploy.isPyInstallerInstalled():
 			deploy.compile()
 			deploy.build()
 			deploy.cleanBuild()
@@ -77,7 +77,7 @@ class GenericDeploy:
 	def cleanBuild(self):
 		raise NotImplementedError("Not implemented yet.")
 
-	def isPyinstallerInstalled(self):
+	def isPyInstallerInstalled(self):
 		raise NotImplementedError("Not implemented yet.")
 
 	def compile(self):
@@ -102,7 +102,7 @@ class Deploy4Windows(GenericDeploy):
 		rm_R(paths['pycache'])
 
 	# Override
-	def isPyinstallerInstalled(self):
+	def isPyInstallerInstalled(self):
 		print("\n * Detecting PyInstaller in this computer...\n")
 		commandOutput = subprocess.run('pyinstaller --version',
 			shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -142,8 +142,11 @@ class Deploy4Linux(GenericDeploy):
 		print("cleanBuild no Linux.")
 
 	# Override
-	def isPyinstallerInstalled(self):
-		print("isPyinstallerInstalled no Linux.")
+	def isPyInstallerInstalled(self):
+		print("\n * Detecting PyInstaller in this computer...\n")
+		commandOutput = subprocess.run('pyinstaller --version',
+			shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+		return True if commandOutput.returncode is 0 else False
 
 	# Override
 	def compile(self):
