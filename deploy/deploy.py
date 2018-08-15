@@ -59,8 +59,8 @@ class DeployRunner():
 			deploy.compile()
 			deploy.build()
 			deploy.cleanBuild()
-		# else:
-		# 	raise "error"
+		else:
+		 	print("\n ! PyInstaller is not installed!\n\n Install it with: 'pip install pyinstaller'")
 
 	@staticmethod
 	def clean(deploy):
